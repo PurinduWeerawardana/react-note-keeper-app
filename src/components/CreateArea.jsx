@@ -19,19 +19,32 @@ function CreateArea(props) {
   function submitNote(event) {
     event.preventDefault();
     props.onAdd(newNote);
+    setNewNote({ title: "", content: "" });
   }
-
+  const [isExpanded, setIsExpanded] = useState(false);
+  function expand() {
+    setIsExpanded(true);
+  }
   return (
     <div>
       <form className="create-note">
-        <input onChange={getNewNotes} name="title" placeholder="Title" />
+        {isExpanded && (
+          <input
+            onChange={getNewNotes}
+            value={newNote.title}
+            name="title"
+            placeholder="Title"
+          />
+        )}
         <textarea
           onChange={getNewNotes}
           name="content"
           placeholder="Take a note..."
-          rows="3"
+          rows={isExpanded ? "3" : "1"}
+          onClick={expand}
+          value={newNote.content}
         />
-        <Zoom in={true}>
+        <Zoom in={isExpanded}>
           <Fab onClick={submitNote}>
             <AddCircleIcon />
           </Fab>
