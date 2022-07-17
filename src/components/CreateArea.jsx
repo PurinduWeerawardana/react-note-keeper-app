@@ -1,4 +1,7 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import Fab from "@material-ui/core/Fab";
+import Zoom from "@material-ui/core/Zoom";
 
 function CreateArea(props) {
   const [newNote, setNewNote] = useState({ title: "", content: "" });
@@ -8,22 +11,31 @@ function CreateArea(props) {
     setNewNote((prev) => {
       if (name === "title") {
         return { title: value, content: prev.content };
-      } else if (name === "content"){
+      } else if (name === "content") {
         return { title: prev.title, content: value };
       }
     });
   }
-  function submitNote(event){
+  function submitNote(event) {
     event.preventDefault();
-    props.onAdd(newNote)
+    props.onAdd(newNote);
   }
 
   return (
     <div>
       <form className="create-note">
         <input onChange={getNewNotes} name="title" placeholder="Title" />
-        <textarea onChange={getNewNotes} name="content" placeholder="Take a note..." rows="3" />
-        <button onClick={submitNote}>Add</button>
+        <textarea
+          onChange={getNewNotes}
+          name="content"
+          placeholder="Take a note..."
+          rows="3"
+        />
+        <Zoom in={true}>
+          <Fab onClick={submitNote}>
+            <AddCircleIcon />
+          </Fab>
+        </Zoom>
       </form>
     </div>
   );
